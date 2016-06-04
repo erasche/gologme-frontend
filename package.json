@@ -1,19 +1,16 @@
 {
-  "name": "react-starterify",
-  "version": "2.4.1",
-  "description": "React JS application skeleton using Browserify and other awesome tools",
+  "name": "gologme",
+  "version": "0.1.0",
+  "description": "React JS application for use with @erasche's gologme",
   "main": "app.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Granze/react-starterify"
+    "url": "https://github.com/erasche/gologme"
   },
   "keywords": [
     "gulp",
     "react",
     "browserify",
-    "seed",
-    "boilerplate",
-    "kickstarter",
     "ES6",
     "ES2015",
     "babel",
@@ -32,17 +29,23 @@
     "deploy": "gulp deploy",
     "test": "ava --tap | tap-nyan"
   },
-  "author": "Maurizio Mangione",
-  "license": "MIT",
+  "author": "Eric Rasche",
+  "license": "AGPLv3",
   "bugs": {
-    "url": "https://github.com/Granze/react-starterify/issues"
+    "url": "https://github.com/erasche/gologme/issues"
   },
-  "homepage": "https://github.com/Granze/react-starterify",
+  "homepage": "https://github.com/erasche/gologme",
   "dependencies": {
     "history": "^2.1.0",
+    "jquery": "^2.2.4",
+    "rd3": "^0.6.3",
     "react": "^15.0.1",
+    "react-d3-components": "^0.6.4",
     "react-dom": "^15.0.1",
-    "react-router": "^2.3.0"
+    "react-infinite-calendar": "^1.1.12",
+    "react-inline-edit": "^3.0.0",
+    "react-router": "^2.3.0",
+    "request": "^2.72.0"
   },
   "devDependencies": {
     "autoprefixer": "^6.3.6",

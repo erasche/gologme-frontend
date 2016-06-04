@@ -26,7 +26,7 @@ import ghPages from 'gulp-gh-pages';
 const paths = {
   bundle: 'app.js',
   entry: 'src/Index.js',
-  srcCss: 'src/**/*.scss',
+  srcCss: ['src/**/*.scss'],
   srcImg: 'src/images/**',
   srcLint: ['src/**/*.js', 'test/**/*.js'],
   dist: 'dist',
@@ -121,7 +121,7 @@ gulp.task('lint', () => {
 
 gulp.task('watchTask', () => {
   gulp.watch(paths.srcCss, ['styles']);
-  gulp.watch(paths.srcLint, ['lint']);
+  //gulp.watch(paths.srcLint, ['lint']);
 });
 
 gulp.task('deploy', () => {
@@ -130,7 +130,7 @@ gulp.task('deploy', () => {
 });
 
 gulp.task('watch', cb => {
-  runSequence('clean', ['browserSync', 'watchTask', 'watchify', 'styles', 'lint', 'images'], cb);
+  runSequence('clean', ['browserSync', 'watchTask', 'watchify', 'styles',  'images'], cb);
 });
 
 gulp.task('build', cb => {
