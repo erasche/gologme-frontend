@@ -9,23 +9,27 @@ import moment from 'moment';
 
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
 
-
 var Day = React.createClass({
 
     getInitialState: function() {
         return {
             window_events: [],
+            updated: new Date(),
         }
     },
 
     loadDataFromServer: function(){
+        this.setState({
+            window_events: this.state.window_events,
+        })
         this.serverRequest = $.ajax({
             url: ServerUrl + "/api/events/recent",
             dataType: 'json',
             cache: true,
             success: function(data) {
                 this.setState({
-                    window_events: data
+                    window_events: data,
+                    updated: new Date(),
                 });
             }.bind(this),
             error: function(xhr, status, err) {
@@ -36,6 +40,7 @@ var Day = React.createClass({
 
     componentDidMount: function() {
         this.loadDataFromServer();
+        setInterval(this.loadDataFromServer, 5000);
     },
 
     componentWillUnmount: function() {
@@ -56,6 +61,7 @@ var Day = React.createClass({
         return (
             <div>
                 <h2>Recent Windows</h2>
+                <p>Data as of {this.state.updated.toTimeString()}</p>
                 <Table>
                     <TableHeader
                         displaySelectAll={false}
