@@ -5,15 +5,16 @@ import InfiniteCalendar from 'react-infinite-calendar';
 import { withRouter } from 'react-router'
 import Blog from './Blog';
 import rd3 from 'rd3';
+import moment from 'moment';
+
+import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
+
 
 var Day = React.createClass({
 
     getInitialState: function() {
         return {
-            blog: "",
             window_events: [],
-            notes_events: [],
-            keyfreq_events: [],
         }
     },
 
@@ -24,10 +25,7 @@ var Day = React.createClass({
             cache: true,
             success: function(data) {
                 this.setState({
-                    blog: data.blog,
-                    window_events: data.window_events,
-                    notes_events: data.notes_events,
-                    keyfreq_events: data.keyfreq_events,
+                    window_events: data
                 });
             }.bind(this),
             error: function(xhr, status, err) {
@@ -46,21 +44,36 @@ var Day = React.createClass({
 
     render: function() {
         var windowTitles = this.state.window_events.map(function(item, index){
+            var q = moment.unix(item.t).format();
             return (
-                <li>{item.s}</li>
+                <TableRow key={index}>
+                    <TableRowColumn>{q}</TableRowColumn>
+                    <TableRowColumn>{item.s}</TableRowColumn>
+                </TableRow>
             );
         });
 
         return (
             <div>
-                <h2>Recent Events</h2>
-                <p>
-                    <b>Blog:</b> {this.state.blog}
-                </p>
-                <h3>Windows</h3>
-                <ul>
-                    {windowTitles}
-                </ul>
+                <h2>Recent Windows</h2>
+                <Table>
+                    <TableHeader
+                        displaySelectAll={false}
+                        adjustForCheckbox={false}
+                        enableSelectAll={false}>
+
+                        <TableRow>
+                            <TableHeaderColumn>Time</TableHeaderColumn>
+                            <TableHeaderColumn>Window Title</TableHeaderColumn>
+                        </TableRow>
+                    </TableHeader>
+                    <TableBody
+                        showRowHover={true}
+                        stripedRows={true}
+                        displayRowCheckbox={false}>
+                        {windowTitles}
+                    </TableBody>
+                </Table>
             </div>
         )
     }
