@@ -1,5 +1,5 @@
 import React from 'react';
-import { ServerUrl } from '../../conf.json';
+import { ServerUrl, ApiKey } from '../../conf.json';
 import $ from 'jquery';
 import InfiniteCalendar from 'react-infinite-calendar';
 import { withRouter } from 'react-router'
@@ -23,6 +23,9 @@ var Day = React.createClass({
             url: ServerUrl + "/api/events/recent",
             dataType: 'json',
             cache: true,
+            headers: {
+                "Authorization": ApiKey,
+            },
             success: function(data) {
                 this.setState({
                     window_events: data,

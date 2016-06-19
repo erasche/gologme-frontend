@@ -1,48 +1,45 @@
 import React from 'react';
-import { ServerUrl } from '../../conf.json';
+import { ServerUrl, ApiKey } from '../../conf.json';
 import $ from 'jquery';
 import InfiniteCalendar from 'react-infinite-calendar';
 import { withRouter } from 'react-router'
+import moment from 'moment';
 import Blog from './Blog';
-import rd3 from 'rd3';
-
-const LineChart = rd3.LineChart;
-var lineData = [
-    {
-        name: 'Keypresses',
-        values: [ { x: 0, y: 20 }],
-    }
-];
-
+import KeypressChart from './KeypressChart';
 
 var Day = React.createClass({
 
     getInitialState: function() {
         return {
-            date: new Date().toISOString().slice(0, 10),
-            blog: "",
+            date: new Date(),
+            blog: null,
             window_events: [],
             notes_events: [],
             keyfreq_events: [],
-            keyData: lineData,
+            keyData: null,
         }
+    },
+
+    threeComponentDate(date){
+        return date.toISOString().slice(0, 10);
     },
 
     loadDataFromServer: function(date){
         this.serverRequest = $.ajax({
-            url: ServerUrl + "/api/events/" + date,
+            url: ServerUrl + "/api/events/" + this.threeComponentDate(date),
             dataType: 'json',
             cache: true,
+            headers: {
+                "Authorization": ApiKey,
+            },
             success: function(data) {
                 this.setState({
                     blog: data.blog,
                     window_events: data.window_events,
                     notes_events: data.notes_events,
                     keyfreq_events: data.keyfreq_events,
-                    keyData: lineData,
                     date: date
                 });
-                console.log(this.state);
             }.bind(this),
             error: function(xhr, status, err) {
                 console.error(this.props.url, status, err.toString());
@@ -52,7 +49,9 @@ var Day = React.createClass({
 
     componentDidMount: function() {
         if(!this.props.params.date){
-            this.props.router.push('/day/' + this.state.date);
+            this.props.router.push('/day/' + this.threeComponentDate(this.state.date));
+        } else {
+            this.props.params.date = moment(this.props.params.date, "YYYY-MM-DD").toDate();
         }
         this.loadDataFromServer(this.props.params.date);
     },
@@ -61,34 +60,24 @@ var Day = React.createClass({
         this.serverRequest.abort();
     },
 
-    navigateTo: function(moment) {
-        var url = '/day/' + moment.format("YYYY-MM-DD");
+    navigateTo: function(date) {
+        var url = '/day/' + date.format("YYYY-MM-DD");
         this.props.router.push(url);
-        this.loadDataFromServer(moment.format("YYYY-MM-DD"));
+        this.loadDataFromServer(date.toDate());
     },
 
     render: function() {
         return (
             <div>
-                <h2>{ this.state.date }</h2>
-                <Blog contents={this.state.blog} date={this.state.date}/>
+                <h2>{ this.threeComponentDate(this.state.date) }</h2>
+                <Blog contents={this.state.blog} date={this.threeComponentDate(this.state.date)}/>
 
                 <h3>Keypresses</h3>
+                <KeypressChart
+                    date={this.state.date}
+                    data={this.state.keyfreq_events}
+                    />
 
-                <LineChart
-                    data={lineData}
-                    width='100%'
-                    height={140}
-                    viewBoxObject={{
-                      x: 0,
-                      y: 0,
-                      width: 800,
-                      height: 140
-                    }}
-                    xAxisTickValues={[]}
-                    yAxisTickValues={[]}
-                    //domain={{x: [0,6], y: [-10,0]}}
-                />
                 <hr />
                 <InfiniteCalendar
                     selectedDate={this.state.date}
