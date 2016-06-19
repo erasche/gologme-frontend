@@ -18,6 +18,9 @@ var Blog = React.createClass({
             headers: {
                 "Authorization": ApiKey,
             },
+            xhrFields: {
+                withCredentials: true
+            },
             data: JSON.stringify({
                 message: newValue.message,
                 date: this.props.date,

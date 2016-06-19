@@ -22,9 +22,12 @@ var Day = React.createClass({
         this.serverRequest = $.ajax({
             url: ServerUrl + "/api/events/recent",
             dataType: 'json',
-            cache: true,
+            cache: false,
             headers: {
                 "Authorization": ApiKey,
+            },
+            xhrFields: {
+                withCredentials: true,
             },
             success: function(data) {
                 this.setState({
