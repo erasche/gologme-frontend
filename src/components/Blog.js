@@ -11,7 +11,6 @@ var Blog = React.createClass({
     },
 
     dataChanged: function(newValue) {
-        console.log("Data was changed", newValue);
         $.ajax({
             type: "POST",
             url: ServerUrl + "/api/blog",

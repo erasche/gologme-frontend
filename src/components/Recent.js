@@ -19,9 +19,6 @@ var Day = React.createClass({
     },
 
     loadDataFromServer: function(){
-        this.setState({
-            window_events: this.state.window_events,
-        })
         this.serverRequest = $.ajax({
             url: ServerUrl + "/api/events/recent",
             dataType: 'json',
@@ -48,7 +45,7 @@ var Day = React.createClass({
     },
 
     render: function() {
-        var windowTitles = this.state.window_events.map(function(item, index){
+        var windowTitles = this.state.window_events.reverse().map(function(item, index){
             var q = moment.unix(item.t).format();
             return (
                 <TableRow key={index}>
