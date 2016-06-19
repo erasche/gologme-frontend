@@ -30,7 +30,7 @@
     "test": "ava --tap | tap-nyan"
   },
   "author": "Eric Rasche",
-  "license": "AGPLv3",
+  "license": "AGPL-3.0",
   "bugs": {
     "url": "https://github.com/erasche/gologme/issues"
   },
@@ -45,8 +45,8 @@
     "react-d3-components": "^0.6.4",
     "react-dom": "^15.0.1",
     "react-infinite-calendar": "^1.1.12",
-    "react-inline-edit": "^3.0.0",
     "react-router": "^2.3.0",
+    "react-tap-event-plugin": "^1.0.0",
     "request": "^2.72.0"
   },
   "devDependencies": {
@@ -83,6 +83,7 @@
     "postcss-simple-extend": "^1.0.0",
     "postcss-simple-vars": "^1.2.0",
     "react-addons-test-utils": "^15.0.1",
+    "react-edit-inline": "^1.0.7",
     "rimraf": "^2.5.2",
     "run-sequence": "^1.1.5",
     "tap-nyan": "0.0.2",

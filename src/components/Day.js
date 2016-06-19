@@ -71,12 +71,11 @@ var Day = React.createClass({
         return (
             <div>
                 <h2>{ this.state.date }</h2>
-                <Blog contents={this.state.blog}/>
+                <Blog contents={this.state.blog} date={this.state.date}/>
 
                 <h3>Keypresses</h3>
 
                 <LineChart
-                    legend={true}
                     data={lineData}
                     width='100%'
                     height={140}
