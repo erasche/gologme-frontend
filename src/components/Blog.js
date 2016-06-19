@@ -6,7 +6,7 @@ import $ from 'jquery';
 var Blog = React.createClass({
     getInitialState: function(){
         return {
-            contents: "Enter daily blog...",
+            contents: null,
         }
     },
 
@@ -23,7 +23,7 @@ var Blog = React.createClass({
                 date: this.props.date,
             }),
             success: function(data){
-                console.log(data)
+                this.setState({contents: data.message});
             }.bind(this),
             error: function(xhr, status, err) {
                 console.error(xhr, status, err.toString());
@@ -35,7 +35,7 @@ var Blog = React.createClass({
         return (
             <InlineEdit
               activeClassName="editing"
-              text={this.props.contents || this.state.contents}
+              text={this.state.contents || this.props.contents}
               paramName="message"
               change={this.dataChanged}
               style={{
