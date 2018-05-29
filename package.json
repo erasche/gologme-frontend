@@ -29,7 +29,7 @@
     "deploy": "gulp deploy",
     "test": "ava --tap | tap-nyan"
   },
-  "author": "Eric Rasche",
+  "author": "Helena Rasche",
   "license": "AGPL-3.0",
   "bugs": {
     "url": "https://github.com/erasche/gologme/issues"
